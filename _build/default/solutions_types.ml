@@ -99,7 +99,4 @@ let rec lookup k = function
   | [] -> None
   | (k', v) :: t -> if k = k' then Some v else lookup k t
 
-let lst = [] |> insert "one" 1  |> insert "two" 2 |> insert "three" 3 ;;
-
-
-lookup "three" lst 
+insert "one" 1 [] 

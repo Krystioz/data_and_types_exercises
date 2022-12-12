@@ -1,5 +1,6 @@
 open OUnit2
 open Solutions_lists
+open Solutions_types
 
 let tests =
   "test suite for exercises"
@@ -8,7 +9,7 @@ let tests =
          ("empty" >:: fun _ -> assert_equal 0 (product []));
          ("more el" >:: fun _ -> assert_equal 131 (product [ 1; 2; 123; 2; 3 ]));
        ]
- 
+
 let tests2 =
   "test suite for solutions"
   >::: [
@@ -31,6 +32,30 @@ let tests3 =
          ("6 el" >:: fun _ -> assert_equal 69 (fifth [ 1; 2; 3; 4; 69; 7 ]));
        ]
 
+let tests4 =
+  "test suite for date funcs"
+  >::: [
+         ( "before" >:: fun _ ->
+           assert_equal true (is_before (2022, 1, 12) (2023, 12, 13)) );
+         ( "before" >:: fun _ ->
+           assert_equal true (is_before (12, 12, 29) (2023, 1, 1)) );
+         ( "after" >:: fun _ ->
+           assert_equal false (is_before (2022, 1, 12) (12, 12, 29)) );
+         ( "after" >:: fun _ ->
+           assert_equal false (is_before (2022, 1, 12) (1, 1, 1)) );
+         ( "equal" >:: fun _ ->
+           assert_equal false (is_before (2022, 1, 12) (2022, 1, 12)) );
+         ( "equal" >:: fun _ ->
+           assert_equal
+             (Some (2022, 1, 12))
+             (erl_date [ (2022, 1, 12); (2023, 1, 12) ]) );
+         ( "equal" >:: fun _ ->
+           assert_equal
+             (Some (1999, 1, 12))
+             (erl_date [ (2022, 1, 12); (1999, 1, 12) ]) );
+       ]
+
 let _ = run_test_tt_main tests
 let _ = run_test_tt_main tests2
 let _ = run_test_tt_main tests3
+let _ = run_test_tt_main tests4
